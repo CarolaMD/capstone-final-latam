@@ -1,0 +1,79 @@
+import pandas as pd
+import os
+
+COUNTRY = "Argentina"
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CSV = os.path.join(BASE, "data", "latam_finanzas_clean.csv")
+
+df = pd.read_csv(CSV, encoding="utf-8")
+d = df[df["pais"] == COUNTRY].copy()
+
+n = len(d)
+edad_min, edad_max = d["edad"].min(), d["edad"].max()
+
+ing = d["ingreso_mensual_usd"]
+ing_median = ing.median()
+ing_mean = ing.mean()
+ing_min = ing.min()
+ing_max = ing.max()
+ing_std = ing.std()
+
+gasto_cols = [
+    "gasto_vivienda_usd",
+    "gasto_alimentacion_usd",
+    "gasto_transporte_usd",
+    "gasto_entretenimiento_usd",
+    "gasto_educacion_usd",
+    "gasto_salud_usd",
+]
+
+# Housing burden: mean(gasto_vivienda) / mean(ingreso) * 100 (ratio of means)
+housing_burden = d["gasto_vivienda_usd"].mean() / ing_mean * 100
+
+# Spending breakdown: average % of income = mean(gasto_x) / mean(ingreso) * 100
+spend_pct = {c: d[c].mean() / ing_mean * 100 for c in gasto_cols}
+
+ahorro_mean = d["ahorro_mensual_usd"].mean()
+pct_neg_savings = (d["ahorro_mensual_usd"] < 0).mean() * 100
+
+ia_mean = d["horas_herramientas_ia_semana"].mean()
+sat_mean = d["satisfaccion_financiera"].mean()
+
+print(f"## País: {COUNTRY}")
+print()
+print(f"### 1. Muestra y rango de edad")
+print(f"- Tamaño de muestra: {n}")
+print(f"- Rango de edad: {edad_min:.0f} - {edad_max:.0f} años")
+print()
+print(f"### 2. Ingreso mensual (USD)")
+print(f"- Mediana: {ing_median:.2f}")
+print(f"- Media: {ing_mean:.2f}")
+print(f"- Mínimo: {ing_min:.2f}")
+print(f"- Máximo: {ing_max:.2f}")
+print(f"- Desviación estándar: {ing_std:.2f}")
+print()
+print(f"### 3. Carga de vivienda")
+print(f"- gasto_vivienda_usd promedio como % del ingreso: {housing_burden:.1f}%")
+print(f"  (método: mean(gasto_vivienda_usd) / mean(ingreso_mensual_usd) * 100)")
+print()
+print(f"### 4. Distribución de gastos (% del ingreso)")
+labels = {
+    "gasto_vivienda_usd": "Vivienda",
+    "gasto_alimentacion_usd": "Alimentación",
+    "gasto_transporte_usd": "Transporte",
+    "gasto_entretenimiento_usd": "Entretenimiento",
+    "gasto_educacion_usd": "Educación",
+    "gasto_salud_usd": "Salud",
+}
+for c in gasto_cols:
+    print(f"- {labels[c]}: {spend_pct[c]:.1f}%")
+print()
+print(f"### 5. Ahorro")
+print(f"- ahorro_mensual_usd promedio: {ahorro_mean:.2f}")
+print(f"- % de encuestados con ahorro negativo: {pct_neg_savings:.1f}%")
+print()
+print(f"### 6. Herramientas de IA y satisfacción")
+print(f"- horas_herramientas_ia_semana promedio: {ia_mean:.2f}")
+print(f"- satisfaccion_financiera promedio: {sat_mean:.2f}")
+print()
+print(f"SUMMARY | muestra={n} | ingreso_mediano={ing_median:.2f} | carga_vivienda={housing_burden:.1f}%")
