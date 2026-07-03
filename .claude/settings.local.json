@@ -1,10 +1,11 @@
 {
-  "enabledMcpjsonServers": [
-    "notion"
-  ],
   "permissions": {
     "allow": [
-      "Skill(dataviz)"
+      "Skill(dataviz)",
+      "mcp__notion__API-update-page-markdown"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "notion"
+  ]
 }
