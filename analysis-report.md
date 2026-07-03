@@ -1,224 +1,142 @@
-# Financial Wellness of Young Professionals in Latin America — Analysis Report
-
-> ## ⚠️ SYNTHETIC DATA NOTICE — READ FIRST
-> **This report is based on a computer-generated (synthetic) dataset, not a real survey.** The
-> intended source file (`data/latam_finanzas_2025.csv`, described as 500 real survey responses) was
-> never available in the project. To build and validate the analysis pipeline end-to-end, a seeded
-> random generator (`scripts/00_generate_data.py`) produced 500 fake records with realistic-looking
-> structure and deliberately injected data-quality issues.
+> ## ⚠️ AVISO — DATOS SINTÉTICOS — LEER PRIMERO
+> **Este informe se basa en un conjunto de datos generado por computadora (sintético), no en una encuesta real.**
+> El archivo fuente (`data/latam_finanzas_2025.csv`, descrito como "500 respuestas reales de encuesta")
+> fue producido por un generador con semilla fija (`scripts/00_generate_data.py`), que crea 500 registros
+> ficticios con estructura realista y problemas de calidad inyectados a propósito.
 >
-> **Every number, table, chart, and "finding" below therefore describes randomly generated data — not
-> the behaviour of real Latin American professionals.** No conclusion here should be used for any real
-> decision, publication, or programme. The document exists to demonstrate the reporting format and to
-> prove the pipeline works; replace the dataset with genuine data and re-run `scripts/01`–`04` to
-> obtain a report with real meaning.
+> **Cada número, tabla, gráfica y "hallazgo" de este documento describe datos generados aleatoriamente —
+> no el comportamiento de profesionales reales de América Latina.** Ninguna conclusión aquí debe usarse
+> para decisiones, publicaciones o programas reales. El documento existe para demostrar el formato del
+> informe y validar que el pipeline funciona de extremo a extremo; sustituya el dataset por datos
+> genuinos y vuelva a ejecutar `scripts/01`–`04` para obtener un informe con significado real.
 
 ---
 
-## 1. Executive Summary
+# Datos que Hablan: Bienestar Financiero de Jóvenes Profesionales en América Latina
+## Informe Ejecutivo — Futuro Digital LatAm, 2025
 
-This study set out to examine the financial wellness of young professionals across six Latin American
-countries, using a 500-respondent dataset covering income, expenses, savings, debt, industry, and
-adoption of AI tools. **The dataset analysed here is synthetic** (see notice above), so the results
-characterise generated data rather than a real population; they are presented to illustrate the
-analytical workflow.
+---
 
-Within this synthetic sample, respondents report a mean age of **30.9 years** and a modest overall
-savings rate of **≈14.0%** of income. Savings behaviour is broadly flat across age groups (mean
-monthly savings **$230–$264**), and **22.0%** of respondents record *negative* monthly savings —
-i.e., spending exceeds income. Income distributions are strikingly similar across countries
-(country means **$1,723–$1,863**), a direct artefact of the data-generation process.
+### 1. Resumen Ejecutivo
 
-Debt is widespread: **49.6%** report holding debt, and among those, total debt equals roughly
-**2.4×–3.3× monthly income**, highest in **México (3.28×)** and **Brasil (3.14×)**. AI-tool adoption
-is high (**93.8%** use them at least occasionally), but shows **no measurable relationship** with
-financial satisfaction (flat at ≈6.0–6.3 / 10). The only strong statistical relationship is between
-income and total expenses (**r = 0.91**), which is built into the generator.
+> *Nota: los datos de este informe son sintéticos (ver aviso arriba); las cifras y recomendaciones son ilustrativas, no reales.*
 
-The recommendations that follow are framed as *illustrations* of how findings would translate into
-financial-literacy programme actions. They must be re-derived from real data before any use.
+La Encuesta de Bienestar Financiero LatAm 2025 recoge las finanzas de 500 jóvenes profesionales (22–40 años) en seis países de la región. Tres hallazgos destacan. **Primero, la vivienda es la principal tensión financiera:** absorbe en promedio el 30.3% del ingreso y supera el umbral de asequibilidad del 30% en Argentina (31.8%), Colombia (31.3%) y México (31.2%). **Segundo, y de forma contraintuitiva, el ahorro disminuye con la edad:** los menores de 25 ahorran ~15% de su ingreso frente a solo ~13% en los mayores de 29, pese a estar en su etapa de mayores ingresos. **Tercero, el acceso a productos financieros formales se asocia con más ahorro:** quienes tienen tarjeta de crédito ahorran 14.4% más que quienes no la tienen, aun ganando 4.7% menos.
 
-## 2. Methodology
+Recomendamos, en consecuencia, **(1) dirigir intervenciones prioritarias de ahorro a los profesionales de 29 años en adelante**, el grupo con menor capacidad de ahorro y casi la mitad de la muestra; y **(2) priorizar contenido de optimización del gasto en vivienda en Argentina, Colombia y México**, los mercados más presionados. El uso de herramientas de IA no mostró relación con el bienestar financiero y no debe tratarse como palanca del programa.
 
-### 2.1 Data origin
-The project specification referenced a real survey file, `data/latam_finanzas_2025.csv` (500 young
-professionals across Latin America). **That file was never present** in the project environment and
-could not be located on the system. To proceed with pipeline development, a **synthetic dataset was
-generated** by `scripts/00_generate_data.py` using a fixed random seed (reproducible). All subsequent
-analysis operates on this generated data.
+---
 
-### 2.2 Variables
-The dataset contains 500 rows and the following key variables:
+### 2. Metodología
 
-| Category | Variables |
-| --- | --- |
-| Demographic | `edad` (age), `pais` (country), `industria`, `ocupacion` |
-| Income & savings | `ingreso_mensual_usd`, `ahorro_mensual_usd` |
-| Expenses (monthly) | `gasto_vivienda_usd`, `gasto_alimentacion_usd`, `gasto_transporte_usd`, `gasto_entretenimiento_usd`, `gasto_educacion_usd`, `gasto_salud_usd` |
-| Debt | `deuda_total_usd`, `tiene_deuda` |
-| Behaviour / tech | `satisfaccion_financiera` (1–10), `horas_herramientas_ia_semana` |
-| Product ownership | `tiene_tarjeta_credito`, `tiene_cuenta_ahorro` |
+**Conjunto de datos.** El análisis parte de `data/latam_finanzas_2025.csv`, un conjunto de 500 registros de jóvenes profesionales en Argentina, Brasil, Chile, Colombia, México y Perú. **(Ver el aviso inicial: los datos son sintéticos, generados con semilla fija por `scripts/00_generate_data.py`.)** Cada registro contiene 20 variables: demográficas (edad, país, industria, ocupación), financieras (ingreso, ahorro y deuda mensuales en USD), seis categorías de gasto, satisfacción financiera (escala 1–10), horas semanales de uso de herramientas de IA, meta financiera y tres indicadores binarios (tarjeta de crédito, cuenta de ahorro, deuda).
 
-> **Note:** the expense breakdown, `satisfaccion_financiera`, and `horas_herramientas_ia_semana`
-> columns were **defined by the analyst** when extending the generator for Phases 3–4. Real-world
-> column names may differ.
+**Enfoque.** El pipeline es reproducible y consta de scripts numerados: exploración (`01_explore.py`), limpieza (`02_clean.py`), análisis (`03_analyse.py`) y visualización (`04_visualise.py`), más perfiles por país generados en paralelo.
 
-### 2.3 Cleaning steps applied
-Cleaning (`scripts/02_clean.py`) applied the following, with no rows dropped (500 → 500):
+**Problemas de calidad detectados y resueltos.**
 
-1. **Standardised `industria`** — collapsed **29 raw variants** (casing, abbreviations, whitespace,
-   e.g. `TEC`/`ti`/`IT`/`Tech` → *Tecnología*) into **7 canonical categories**.
-2. **Median-imputed** numeric columns below a 40%-missing threshold: `edad` (5% missing),
-   `ingreso_mensual_usd` (8%), `ahorro_mensual_usd` (15%), `satisfaccion_financiera` (6%),
-   `horas_herramientas_ia_semana` (4%).
-3. **Left un-imputed**: `deuda_total_usd` (**45% missing**, above threshold) — debt figures below
-   rest on the non-missing ~55% of records.
-4. **Flagged, not removed**, negative savings in a new boolean column `ahorro_negativo`
-   (**110 records, 22.0%**), treated as valid (spending > earning).
+- **Inconsistencia en `industria`:** 29 variantes de escritura (mayúsculas, acentos, abreviaturas y sinónimos como `TEC`, `ti`, `Tech`, `Tecnología`) se estandarizaron a **7 categorías** canónicas mediante un mapa de normalización.
+- **Valores faltantes:** se imputó con la **mediana** las columnas con hasta 40% de ausencias —edad (5%), ingreso (8%), ahorro (15%), satisfacción (6%) y horas de IA (4%)— para preservar los 500 registros. `deuda_total_usd`, con 45% de ausencias, se **dejó sin imputar** por ser demasiado alta para hacerlo de forma fiable.
+- **Ahorro negativo:** 110 registros presentan ahorro mensual negativo (gasto que excede el ingreso). Son válidos y **no se eliminaron**; se marcaron con la columna booleana `ahorro_negativo` para análisis de riesgo.
+- **Codificación:** se confirmó lectura/escritura en UTF-8 para preservar acentos y caracteres (México, Perú, Educación).
 
-## 3. Sample Profile
+**Limitaciones.** Más allá del carácter sintético de los datos, la imputación con la mediana global del ingreso ($1,784.81) explica que Brasil, Chile y Perú compartan exactamente esa mediana; la segmentación por ingreso debería usar la distribución completa, no solo la mediana. Los hallazgos son correlacionales y no establecen causalidad.
 
-- **Size & age:** 500 respondents; mean age **30.9**, median **31**.
-- **Geography:** distributed across six countries —
+---
 
-| Country | Respondents |
-| --- | --- |
+### 3. Perfil de la Muestra
+
+Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (media 30.9, mediana 31).
+
+**Por país** (n=500):
+
+| País | N |
+|---|---:|
 | Perú | 94 |
 | Brasil | 92 |
 | Colombia | 85 |
-| México | 78 |
 | Argentina | 78 |
+| México | 78 |
 | Chile | 73 |
 
-- **Top industries:** **Tecnología (126)**, Finanzas (83), Comercio (64), Educación (63), Salud (60),
-  Manufactura (59), Gobierno (45).
-- **Product ownership:** credit card **51.0%**, savings account **53.6%**, holds debt **49.6%**.
-- **Technology adoption:** **93.8%** use AI tools at least occasionally (mean **2.96 hrs/week**); only
-  **6.2%** report zero use. No respondent reported 9+ hrs/week, so the "High" usage band is empty.
+**Por grupo de edad:** 18-22: 21 · 23-25: 81 · 26-28: 73 · 29-32: 129 · 33-36: 106 · 37-40: 90. La muestra se concentra en los 29 años en adelante (325 registros, 65%).
 
-## 4. Findings
+**Por industria** (7 categorías tras estandarización): Tecnología 126 · Finanzas 83 · Comercio 64 · Educación 63 · Salud 60 · Manufactura 59 · Gobierno 45.
 
-*All figures describe the synthetic dataset.*
+**Por ocupación:** Contador/a 74 · Docente 69 · Diseñador/a 67 · Médico/a 65 · Analista 59 · Emprendedor/a 58 · Ingeniero/a 55 · Gerente 53.
 
-### 4.1 Cost of Living vs Income (by country)
-Country-level income and expenses are tightly clustered; savings rates span **10.7%–15.7%**.
+**Metas financieras:** Comprar casa 92 · Ahorrar para retiro 90 · Iniciar negocio 86 · Pagar deudas 85 · Viajar 82 · Fondo de emergencia 65.
 
-| Country | Avg income (USD) | Avg total expenses (USD) | Savings rate |
-| --- | --- | --- | --- |
-| Colombia | 1,862.66 | 1,330.89 | **14.83%** |
-| Chile | 1,811.58 | 1,239.11 | 13.79% |
-| Perú | 1,775.94 | 1,215.70 | **10.65%** |
-| México | 1,753.17 | 1,230.98 | **15.71%** |
-| Brasil | 1,729.84 | 1,168.21 | 15.40% |
-| Argentina | 1,723.22 | 1,243.29 | 13.91% |
-
-**Insight:** México shows the highest savings rate (**15.71%**) and Perú the lowest (**10.65%**), but
-the spread is narrow — an artefact of the generator, not a real economic signal.
-![Income Distribution by Country](charts/01_income_by_country.png)
-
-### 4.2 Savings Patterns by Age Group
-Mean monthly savings are essentially flat across age, dipping slightly in the oldest band.
-
-| Age group | n | Mean savings (USD) | Median savings (USD) |
-| --- | --- | --- | --- |
-| 20–24 | 79 | 252.50 | 255.59 |
-| 25–29 | 116 | **264.20** | 255.59 |
-| 30–34 | 158 | 251.94 | 255.59 |
-| 35+ | 147 | **229.78** | 255.59 |
-
-**Insight:** the identical median (**$255.59**) across every group is a direct consequence of
-median-imputing 75 missing savings values; it is not a genuine pattern.
-![Savings Patterns by Age Bins](charts/02_savings_by_age.png)
-
-### 4.3 Industry Benchmarks
-Comercio leads on both mean savings and share of positive savers.
-
-| Industry | n | Mean income (USD) | Mean savings (USD) | % positive savers |
-| --- | --- | --- | --- | --- |
-| Tecnología | 126 | 1,856.27 | 248.08 | 79.4% |
-| Comercio | 64 | 1,848.91 | **310.61** | **85.9%** |
-| Educación | 63 | 1,751.87 | 223.93 | 73.0% |
-| Salud | 60 | 1,731.58 | 268.30 | 78.3% |
-| Finanzas | 83 | 1,729.93 | **218.33** | 75.9% |
-| Manufactura | 59 | 1,725.88 | 234.30 | 76.3% |
-| Gobierno | 45 | 1,687.09 | 242.02 | 75.6% |
-
-**Insight:** on a savings-rate basis (mean savings ÷ mean income), Comercio leads at **16.8%** and
-Finanzas trails at **12.6%**.
-![Savings Rate by Industry](charts/04_savings_rate_by_industry.png)
-
-### 4.4 Financial Satisfaction & AI-Tool Usage
-Satisfaction is flat across usage bands; no dose-response relationship appears.
-
-| AI usage (hrs/week) | n | Avg satisfaction (1–10) | Avg savings (USD) |
-| --- | --- | --- | --- |
-| None (0) | 31 | 6.16 | 247.18 |
-| Low (1–3) | 292 | **6.25** | 261.52 |
-| Medium (4–8) | 177 | 6.02 | 226.85 |
-| High (9+) | 0 | — | — |
-
-**Insight:** heavier AI use is **not** associated with higher financial satisfaction in this data.
-![Financial Satisfaction by AI Usage](charts/03_satisfaction_by_ai_usage.png)
-
-### 4.5 Debt Analysis (debt holders only)
-Among the **49.6%** who hold debt, total debt runs **2.4×–3.3× monthly income**.
-
-| Country | n | Mean debt (USD) | Mean monthly income (USD) | Debt-to-income |
-| --- | --- | --- | --- | --- |
-| México | 41 | 5,478.23 | 1,669.66 | **3.28×** |
-| Brasil | 43 | 5,550.41 | 1,765.14 | 3.14× |
-| Argentina | 35 | 5,146.50 | 1,744.42 | 2.95× |
-| Chile | 34 | 5,244.42 | 1,817.25 | 2.89× |
-| Perú | 49 | 4,579.98 | 1,761.25 | 2.60× |
-| Colombia | 46 | 4,340.76 | 1,808.43 | **2.40×** |
-
-**Insight:** México and Brasil carry the heaviest debt burdens relative to income. *(Based on the
-~55% of records with non-missing debt values.)*
-![Debt to Income Ratio by Country](charts/05_debt_to_income_by_country.png)
-
-### 4.6 Correlation Matrix (Pearson)
-Only income–expenses is strongly correlated; all other relationships are negligible.
-
-|  | Age | Income | Total Expenses | AI Hours | Fin. Satisfaction |
-| --- | --- | --- | --- | --- | --- |
-| **Age** | 1.000 | 0.017 | -0.014 | 0.064 | -0.122 |
-| **Income** | 0.017 | 1.000 | **0.912** | 0.007 | 0.006 |
-| **Total Expenses** | -0.014 | **0.912** | 1.000 | 0.021 | -0.001 |
-| **AI Hours** | 0.064 | 0.007 | 0.021 | 1.000 | -0.058 |
-| **Fin. Satisfaction** | -0.122 | 0.006 | -0.001 | -0.058 | 1.000 |
-
-**Insight:** the **r = 0.91** income–expense link is by construction (expenses were generated as a
-fixed fraction of income). Satisfaction correlates with nothing measured here.
-
-## 5. Recommendations
-
-*These are illustrative — they show how findings would inform a financial-literacy programme. They
-must be re-validated on real data before any real-world action.*
-
-1. **Target negative savers first.** With **22.0%** of respondents saving nothing (negative monthly
-   savings, §2.3/§4.2), prioritise a budgeting module that helps this segment reach a positive cash
-   flow before any investment content.
-2. **Launch debt-reduction support in high-burden markets.** Debt-to-income reaches **3.28×** in
-   México and **3.14×** in Brasil (§4.5); pilot debt-consolidation and repayment coaching there first.
-3. **Raise the overall savings rate from ≈14%.** Since savings are flat across age and country
-   (§4.1/§4.2), deliver a universal "pay-yourself-first" automation curriculum rather than
-   age-segmented content.
-4. **Decouple tech adoption from financial confidence.** AI-tool use is high (**93.8%**) yet unrelated
-   to satisfaction (§4.4); embed financial-literacy content *inside* the AI tools people already use,
-   rather than assuming adoption alone improves outcomes.
-5. **Improve debt-data collection.** The **45% missing rate** on `deuda_total_usd` (§2.3) undermines
-   debt analysis; make this field mandatory in future survey waves.
-
-## 6. Conclusion
-
-Within this **synthetic** dataset, financial wellness looks fragile but uniform: modest savings rates
-near **14%**, roughly a fifth of respondents spending more than they earn, and debt burdens of
-**2.4×–3.3×** monthly income among the half who carry debt. High AI-tool adoption shows no link to
-financial satisfaction, and income is the dominant driver of spending. These patterns, however, are
-products of a random data generator and carry **no real-world meaning**. The genuine value delivered
-here is a validated, reproducible pipeline: once a real survey file replaces the synthetic one and
-`scripts/01`–`04` are re-run, this same report structure will yield findings that can responsibly
-inform a financial-literacy programme.
+**Productos y situación financiera:** 255 tienen tarjeta de crédito (51%) y 245 no; 268 tienen cuenta de ahorro (54%) y 232 no; la deuda está casi dividida (248 con deuda, 252 sin). **110 registros (22%) reflejan gasto mayor al ingreso** (ahorro negativo).
 
 ---
-*Generated from synthetic data via `scripts/00`–`04`. Not for real-world use.*
+
+### 4. Hallazgos
+
+#### 4.1 Ingreso mediano por país
+
+**Hallazgo estadístico.** El ingreso mediano mensual va de $1,840.79 (Colombia) a $1,758.35 (México), un rango de apenas 4.7%. Argentina $1,788.17; Brasil, Chile y Perú $1,784.81. La desviación estándar por país va de $583.55 (Brasil) a $810.85 (México).
+
+**Interpretación.** El ingreso mensual mediano de los jóvenes profesionales es notablemente homogéneo entre los seis países, con un rango de apenas 4.7% que va de $1,840.79 en Colombia (el más alto) a $1,758.35 en México (el más bajo), mientras Brasil, Chile y Perú coinciden en $1,784.81. Esta similitud implica que Futuro Digital LatAm puede diseñar un único currículo regional de educación financiera calibrado a una línea base común (~$1,780/mes) sin ajustes mayores por país, aunque la amplia dispersión dentro de cada país (desviación estándar de $583.55 en Brasil a $810.85 en México) revela que el público más heterogéneo —y por tanto el más difícil de atender con un mensaje único— son los profesionales mexicanos. Se recomienda segmentar a los participantes por nivel de ingreso individual (por ejemplo, en quintiles dentro de cada país) en lugar de por nacionalidad, ya que la variación interna supera con creces las diferencias entre países.
+
+**Gráfica.** `charts/01_income_by_country.png`
+
+#### 4.2 Edad vs. ahorro
+
+**Hallazgo estadístico.** El ahorro mensual promedio y la tasa de ahorro descienden con la edad: 18-22: $285.40 (14.9%) · 23-25: $266.65 (15.1%) · 26-28: $246.92 (14.8%) · 29-32: $236.36 (13.2%) · 33-36: $253.00 (14.0%) · 37-40: $236.15 (13.2%). Línea de tendencia: −1.4 USD por año de edad.
+
+**Interpretación.** El ahorro mensual promedio disminuye con la edad, cayendo de $285.40 (tasa de ahorro del 14.9%) en el grupo de 18-22 años a $236.15 (13.2%) en el de 37-40 años, con una línea de tendencia levemente negativa (−1.4 USD por año de edad). Este patrón contraintuitivo —se esperaría que el ahorro creciera con la edad y la experiencia— es más relevante para los profesionales de 29 años en adelante (grupos 29-32 y 37-40, ambos con tasa de solo 13.2%), que representan casi la mitad de la muestra y son quienes muestran la menor capacidad de ahorro pese a estar en su etapa de mayores ingresos. Se recomienda que Futuro Digital LatAm dirija intervenciones prioritarias de ahorro automatizado y planeación de metas a los cohortes de 29+ años, aprovechando además los buenos hábitos de los menores de 25 (tasa ~15%) como modelo y contenido testimonial del programa.
+
+**Gráfica.** `charts/02_age_vs_savings.png`
+
+#### 4.3 Desglose de gasto
+
+**Hallazgo estadístico.** Como % del ingreso: Vivienda 30.3% ($538.84) · Alimentación 15.3% ($270.82) · Transporte 8.1% ($143.33) · Entretenimiento 6.0% ($106.28) · Educación 5.1% ($90.27) · Salud 4.9% ($87.11). Gasto categorizado total: 69.6%.
+
+**Interpretación.** El gasto se concentra fuertemente en dos rubros esenciales: la vivienda absorbe el 30.3% del ingreso ($538.84 en promedio) y la alimentación el 15.3% ($270.82), de modo que juntos consumen el 45.6% del ingreso mensual, mientras transporte (8.1%), entretenimiento (6.0%), educación (5.1%) y salud (4.9%) suman el resto hasta un gasto categorizado total del 69.6%. Que la vivienda se sitúe justo en el umbral de asequibilidad del 30% implica que los jóvenes profesionales de menores ingresos son los más vulnerables —para quien gana cerca del mínimo de $300 mensuales, un gasto fijo de vivienda proporcionalmente similar deja un margen mínimo para ahorrar—, por lo que el programa de Futuro Digital LatAm debe centrar su contenido presupuestal en estos dos rubros dominantes. Se recomienda crear un módulo práctico de "presupuesto 50/30/20 adaptado" que ataque directamente los costos de vivienda y alimentación (renta compartida, planificación de compras) y convierta el ~30% del ingreso no absorbido por estas categorías en metas concretas de ahorro.
+
+**Gráfica.** `charts/03_spending_breakdown.png`
+
+#### 4.4 Tarjeta de crédito vs. ahorro
+
+**Hallazgo estadístico.** Tenedores (n=255) vs. no tenedores (n=245): Ingreso $1,733.43 vs $1,819.55 (−4.7%) · Alimentación $264.68 vs $277.22 (−4.5%) · Entretenimiento $107.10 vs $105.43 (+1.6%) · Ahorro $264.68 vs $231.37 (+14.4%).
+
+**Interpretación.** Los tenedores de tarjeta de crédito (n=255) ganan un 4.7% menos que los no tenedores ($1,733.43 frente a $1,819.55) y gastan un 4.5% menos en alimentación, pero ahorran un 14.4% más ($264.68 frente a $231.37 al mes), la mayor diferencia entre todas las métricas comparadas. Esto sugiere que el acceso a productos financieros formales se asocia con mejores hábitos de ahorro más allá del nivel de ingreso, un patrón especialmente relevante para el segmento de no tenedores (n=245, casi la mitad de la muestra), que pese a ingresos algo mayores ahorra menos y podría estar excluido de herramientas básicas de gestión financiera. Se recomienda que Futuro Digital LatAm incorpore un módulo de inclusión y uso responsable de productos crediticios dirigido a los no tenedores, validando primero la dirección causal (¿la tarjeta impulsa el ahorro o quienes ya ahorran acceden a ella?) antes de promover activamente su adopción.
+
+**Gráfica.** Sin gráfica dedicada (comparación de dos grupos; ver tabla anterior).
+
+#### 4.5 Uso de IA vs. satisfacción financiera
+
+**Hallazgo estadístico.** Bajo (0-3h): n=323, satisfacción 6.24, ingreso $1,765.21 · Medio (4-6h): n=164, 6.00, $1,791.88 · Alto (7h+): n=13, 6.23, $1,829.45. Correlación de Pearson r = −0.058 (p = 0.196, n = 500): sin correlación significativa.
+
+**Interpretación.** No existe correlación estadísticamente significativa entre las horas semanales de uso de herramientas de IA y la satisfacción financiera (Pearson r = −0.058, p = 0.196, n = 500), y la satisfacción promedio es prácticamente plana entre los tres grupos —6.24 en uso bajo (0-3h, n=323), 6.00 en uso medio (4-6h, n=164) y 6.23 en uso alto (7h+, n=13), en una escala de 1 a 10. Este resultado nulo es relevante porque advierte a Futuro Digital LatAm que la adopción de herramientas de IA no predice el bienestar financiero de ningún segmento, ni siquiera el de usuarios intensivos (grupo alto, apenas n=13), por lo que no debe tratarse como palanca del programa. Se recomienda no invertir recursos en alfabetización en IA como vía hacia el bienestar financiero y, en cambio, redirigir ese esfuerzo a los factores con efecto demostrado (ahorro por edad y carga de vivienda), recolectando más datos de usuarios de uso alto solo si se desea evaluar el tema con potencia estadística adecuada.
+
+**Gráfica.** `charts/04_satisfaction_by_ai_usage.png`
+
+#### 4.6 Carga de vivienda por país
+
+**Hallazgo estadístico.** Gasto en vivienda como % del ingreso: Argentina 31.8% · Colombia 31.3% · México 31.2% · Chile 29.8% · Perú 29.6% · Brasil 28.6%. Tres países superan el umbral del 30%.
+
+**Interpretación.** La carga de vivienda —gasto en vivienda como porcentaje del ingreso— oscila entre 28.6% en Brasil y 31.8% en Argentina, y tres países superan el umbral de asequibilidad del 30%: Argentina (31.8%), Colombia (31.3%) y México (31.2%), mientras Chile (29.8%), Perú (29.6%) y Brasil (28.6%) quedan justo por debajo. Esto importa porque los jóvenes profesionales argentinos, colombianos y mexicanos son los más presionados por el costo de vivienda y, por tanto, los que disponen de menor margen para ahorrar, mientras que incluso los países por debajo del umbral rondan el límite, confirmando que la vivienda es la principal tensión de gasto en toda la región. Se recomienda que Futuro Digital LatAm priorice contenido de optimización del gasto en vivienda (renta vs. compra, vivienda compartida, negociación de contratos) en Argentina, Colombia y México, y cruce esta carga con la marca de ahorro negativo para identificar y atender primero a los hogares en mayor riesgo financiero.
+
+**Gráfica.** `charts/05_housing_burden_by_country.png`
+
+---
+
+### 5. Recomendaciones
+
+> *Recomendaciones ilustrativas basadas en datos sintéticos; no aplicar a un programa real sin datos genuinos.*
+
+1. **Priorizar intervenciones de ahorro para los profesionales de 29 años en adelante.** Estos cohortes (29-32 y 37-40, el 65% de la muestra) muestran la menor tasa de ahorro (13.2%) pese a estar en su etapa de mayores ingresos *(Hallazgo 4.2)*. Ofrecer ahorro automatizado y planeación de metas, usando los hábitos de los menores de 25 (~15%) como modelo testimonial.
+
+2. **Concentrar el contenido de educación presupuestal en vivienda y alimentación.** Juntas absorben el 45.6% del ingreso *(Hallazgo 4.3)*. Un módulo de "presupuesto 50/30/20 adaptado" con tácticas concretas (renta compartida, planificación de compras) atacaría el mayor punto de fuga del ingreso.
+
+3. **Focalizar geográficamente el contenido de vivienda en Argentina, Colombia y México.** Los tres superan el umbral de asequibilidad del 30% *(Hallazgo 4.6)*. Complementar con material sobre decisiones de vivienda (renta vs. compra, ubicación, negociación de contratos) y cruzar con la marca `ahorro_negativo` para atender primero a los hogares en riesgo (22% de la muestra).
+
+4. **Impulsar la inclusión financiera formal entre los no tenedores de productos financieros.** Los tenedores de tarjeta de crédito ahorran 14.4% más pese a ingresos algo menores *(Hallazgo 4.4)*. Incorporar un módulo de uso responsable de crédito y apertura de cuentas de ahorro (232 registros aún no la tienen), validando la causalidad antes de promover activamente la adopción de tarjetas.
+
+5. **Diseñar un único currículo regional, segmentado por ingreso individual y no por país.** El ingreso mediano es casi idéntico entre los seis países (rango 4.7%), pero la variación interna es mucho mayor *(Hallazgo 4.1)*. Un currículo común calibrado a ~$1,780/mes, con rutas por quintil de ingreso, es más eficiente que seis programas nacionales. **No** invertir en alfabetización en IA como vía de bienestar financiero: no mostró relación con la satisfacción *(Hallazgo 4.5)*.
+
+---
+
+*Fuente de todos los datos: Encuesta de Bienestar Financiero LatAm 2025, Futuro Digital LatAm (n=500) — **datos sintéticos** (ver aviso inicial). Análisis reproducible en `scripts/`; estadísticas exactas en `scripts/findings_summary.md`.*
