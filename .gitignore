@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# MCP config (contains Notion integration token)
+.mcp.json
+
+# Secrets / credentials
+.env
+.env.*
+*.env
+*secret*
+*token*
+*.key
+*.pem
+credentials.json

@@ -1,0 +1,34 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=\"$CLAUDE_FILE_PATH\"; if [[ \"$f\" == charts/*.png ]]; then n=$(ls charts/*.png 2>/dev/null | wc -l); echo \"Chart saved: $(basename $f) — $n/5 charts complete\"; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$(date '+%Y-%m-%d %H:%M:%S') | exit:$CLAUDE_TOOL_RESULT_EXIT_CODE | $(echo $CLAUDE_TOOL_INPUT | head -c 120)\" >> session-log.md"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/validate-phases.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
