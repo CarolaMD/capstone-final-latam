@@ -139,4 +139,10 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 ---
 
+### 6. Conclusión
+
+El bienestar financiero de los jóvenes profesionales de América Latina se perfila como frágil pero manejable: ingresos regionalmente homogéneos (~$1,780/mes), una carga de vivienda que roza o supera el umbral del 30% en la mitad de los países, y tasas de ahorro modestas (13–15%) que, contra lo esperado, decrecen con la edad. El acceso a productos financieros formales se asocia con mayor ahorro, lo que señala la inclusión como palanca prometedora. Estas conclusiones, no obstante, derivan de un conjunto de datos **sintético** generado con semilla fija, no de una encuesta real; ilustran el formato del informe y deben reconfirmarse con datos genuinos antes de cualquier decisión.
+
+---
+
 *Fuente de todos los datos: Encuesta de Bienestar Financiero LatAm 2025, Futuro Digital LatAm (n=500) — **datos sintéticos** (ver aviso inicial). Análisis reproducible en `scripts/`; estadísticas exactas en `scripts/findings_summary.md`.*
