@@ -24,3 +24,6 @@ Push each finding after Phase 3 analysis. Push report after Phase 6.
 Hooks: chart counter, script logger, phase validator (configured in .claude/settings.json)
 Skills: /interpret (finding format), /publish-finding (Notion push)
 Agent: country-profiler (parallel country analysis)
+
+## Technical Notes
+Technical note: the Notion MCP server is defined in .mcp.json (not in .claude/settings.json) because this version of Claude Code requires project-scoped MCP servers to live in that separate file — the mcpServers key is silently ignored if placed inside settings.json. settings.json therefore contains only the 3 hooks (chart counter, script logger, and phase validator); the Notion connection is configured and verified independently via .mcp.json and confirmed working with `claude mcp list`.
