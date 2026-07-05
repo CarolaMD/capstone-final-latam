@@ -103,7 +103,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** Los tenedores de tarjeta de crédito (n=255) ganan un 4.7% menos que los no tenedores ($1,733.43 frente a $1,819.55) y gastan un 4.5% menos en alimentación, pero ahorran un 14.4% más ($264.68 frente a $231.37 al mes), la mayor diferencia entre todas las métricas comparadas. Esto sugiere que el acceso a productos financieros formales se asocia con mejores hábitos de ahorro más allá del nivel de ingreso, un patrón especialmente relevante para el segmento de no tenedores (n=245, casi la mitad de la muestra), que pese a ingresos algo mayores ahorra menos y podría estar excluido de herramientas básicas de gestión financiera. Se recomienda que Futuro Digital LatAm incorpore un módulo de inclusión y uso responsable de productos crediticios dirigido a los no tenedores, validando primero la dirección causal (¿la tarjeta impulsa el ahorro o quienes ya ahorran acceden a ella?) antes de promover activamente su adopción.
 
-**Gráfica.** ![Figura 4: Satisfacción financiera por uso de IA](charts/04_satisfaction_by_ai_usage.png)
+**Gráfica.** Sin gráfica dedicada (comparación de dos grupos; ver tabla anterior).
 
 #### 4.5 Uso de IA vs. satisfacción financiera
 
