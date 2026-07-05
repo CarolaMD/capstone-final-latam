@@ -79,7 +79,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** El ingreso mensual mediano de los jóvenes profesionales es notablemente homogéneo entre los seis países, con un rango de apenas 4.7% que va de $1,840.79 en Colombia (el más alto) a $1,758.35 en México (el más bajo), mientras Brasil, Chile y Perú coinciden en $1,784.81. Esta similitud implica que Futuro Digital LatAm puede diseñar un único currículo regional de educación financiera calibrado a una línea base común (~$1,780/mes) sin ajustes mayores por país, aunque la amplia dispersión dentro de cada país (desviación estándar de $583.55 en Brasil a $810.85 en México) revela que el público más heterogéneo —y por tanto el más difícil de atender con un mensaje único— son los profesionales mexicanos. Se recomienda segmentar a los participantes por nivel de ingreso individual (por ejemplo, en quintiles dentro de cada país) en lugar de por nacionalidad, ya que la variación interna supera con creces las diferencias entre países.
 
-**Gráfica.** `charts/01_income_by_country.png`
+**Gráfica.** ![Figura 1: Ingreso mediano por país](charts/01_income_by_country.png)
 
 #### 4.2 Edad vs. ahorro
 
@@ -87,7 +87,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** El ahorro mensual promedio disminuye con la edad, cayendo de $285.40 (tasa de ahorro del 14.9%) en el grupo de 18-22 años a $236.15 (13.2%) en el de 37-40 años, con una línea de tendencia levemente negativa (−1.4 USD por año de edad). Este patrón contraintuitivo —se esperaría que el ahorro creciera con la edad y la experiencia— es más relevante para los profesionales de 29 años en adelante (grupos 29-32 y 37-40, ambos con tasa de solo 13.2%), que representan casi la mitad de la muestra y son quienes muestran la menor capacidad de ahorro pese a estar en su etapa de mayores ingresos. Se recomienda que Futuro Digital LatAm dirija intervenciones prioritarias de ahorro automatizado y planeación de metas a los cohortes de 29+ años, aprovechando además los buenos hábitos de los menores de 25 (tasa ~15%) como modelo y contenido testimonial del programa.
 
-**Gráfica.** `charts/02_age_vs_savings.png`
+**Gráfica.** ![Figura 2: Edad vs. ahorro mensual](charts/02_age_vs_savings.png)
 
 #### 4.3 Desglose de gasto
 
@@ -95,7 +95,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** El gasto se concentra fuertemente en dos rubros esenciales: la vivienda absorbe el 30.3% del ingreso ($538.84 en promedio) y la alimentación el 15.3% ($270.82), de modo que juntos consumen el 45.6% del ingreso mensual, mientras transporte (8.1%), entretenimiento (6.0%), educación (5.1%) y salud (4.9%) suman el resto hasta un gasto categorizado total del 69.6%. Que la vivienda se sitúe justo en el umbral de asequibilidad del 30% implica que los jóvenes profesionales de menores ingresos son los más vulnerables —para quien gana cerca del mínimo de $300 mensuales, un gasto fijo de vivienda proporcionalmente similar deja un margen mínimo para ahorrar—, por lo que el programa de Futuro Digital LatAm debe centrar su contenido presupuestal en estos dos rubros dominantes. Se recomienda crear un módulo práctico de "presupuesto 50/30/20 adaptado" que ataque directamente los costos de vivienda y alimentación (renta compartida, planificación de compras) y convierta el ~30% del ingreso no absorbido por estas categorías en metas concretas de ahorro.
 
-**Gráfica.** `charts/03_spending_breakdown.png`
+**Gráfica.** ![Figura 3: Desglose de gasto por categoría](charts/03_spending_breakdown.png)
 
 #### 4.4 Tarjeta de crédito vs. ahorro
 
@@ -103,7 +103,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** Los tenedores de tarjeta de crédito (n=255) ganan un 4.7% menos que los no tenedores ($1,733.43 frente a $1,819.55) y gastan un 4.5% menos en alimentación, pero ahorran un 14.4% más ($264.68 frente a $231.37 al mes), la mayor diferencia entre todas las métricas comparadas. Esto sugiere que el acceso a productos financieros formales se asocia con mejores hábitos de ahorro más allá del nivel de ingreso, un patrón especialmente relevante para el segmento de no tenedores (n=245, casi la mitad de la muestra), que pese a ingresos algo mayores ahorra menos y podría estar excluido de herramientas básicas de gestión financiera. Se recomienda que Futuro Digital LatAm incorpore un módulo de inclusión y uso responsable de productos crediticios dirigido a los no tenedores, validando primero la dirección causal (¿la tarjeta impulsa el ahorro o quienes ya ahorran acceden a ella?) antes de promover activamente su adopción.
 
-**Gráfica.** Sin gráfica dedicada (comparación de dos grupos; ver tabla anterior).
+**Gráfica.** ![Figura 4: Satisfacción financiera por uso de IA](charts/04_satisfaction_by_ai_usage.png)
 
 #### 4.5 Uso de IA vs. satisfacción financiera
 
@@ -111,7 +111,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** No existe correlación estadísticamente significativa entre las horas semanales de uso de herramientas de IA y la satisfacción financiera (Pearson r = −0.058, p = 0.196, n = 500), y la satisfacción promedio es prácticamente plana entre los tres grupos —6.24 en uso bajo (0-3h, n=323), 6.00 en uso medio (4-6h, n=164) y 6.23 en uso alto (7h+, n=13), en una escala de 1 a 10. Este resultado nulo es relevante porque advierte a Futuro Digital LatAm que la adopción de herramientas de IA no predice el bienestar financiero de ningún segmento, ni siquiera el de usuarios intensivos (grupo alto, apenas n=13), por lo que no debe tratarse como palanca del programa. Se recomienda no invertir recursos en alfabetización en IA como vía hacia el bienestar financiero y, en cambio, redirigir ese esfuerzo a los factores con efecto demostrado (ahorro por edad y carga de vivienda), recolectando más datos de usuarios de uso alto solo si se desea evaluar el tema con potencia estadística adecuada.
 
-**Gráfica.** `charts/04_satisfaction_by_ai_usage.png`
+**Gráfica.** ![Figura 4: Satisfacción financiera por uso de IA](charts/04_satisfaction_by_ai_usage.png)
 
 #### 4.6 Carga de vivienda por país
 
@@ -119,7 +119,7 @@ Los 500 registros corresponden a jóvenes profesionales de **22 a 40 años** (me
 
 **Interpretación.** La carga de vivienda —gasto en vivienda como porcentaje del ingreso— oscila entre 28.6% en Brasil y 31.8% en Argentina, y tres países superan el umbral de asequibilidad del 30%: Argentina (31.8%), Colombia (31.3%) y México (31.2%), mientras Chile (29.8%), Perú (29.6%) y Brasil (28.6%) quedan justo por debajo. Esto importa porque los jóvenes profesionales argentinos, colombianos y mexicanos son los más presionados por el costo de vivienda y, por tanto, los que disponen de menor margen para ahorrar, mientras que incluso los países por debajo del umbral rondan el límite, confirmando que la vivienda es la principal tensión de gasto en toda la región. Se recomienda que Futuro Digital LatAm priorice contenido de optimización del gasto en vivienda (renta vs. compra, vivienda compartida, negociación de contratos) en Argentina, Colombia y México, y cruce esta carga con la marca de ahorro negativo para identificar y atender primero a los hogares en mayor riesgo financiero.
 
-**Gráfica.** `charts/05_housing_burden_by_country.png`
+**Gráfica.** ![Figura 5: Carga de vivienda por país](charts/05_housing_burden_by_country.png)
 
 ---
 
