@@ -62,3 +62,11 @@
 2026-07-03 16:36:33 | exit: | 
 2026-07-03 16:38:13 | exit: | 
 2026-07-03 16:48:32 | exit: | 
+2026-07-04 16:44:37 | exit:0 | git -C /c/Users/carol/capstone-final add -A && git -C /c/Users/carol/capstone-final status
+2026-07-04 16:45:04 | exit:0 | git -C /c/Users/carol/capstone-final commit -m "Phase 6 complete â€” added conclusion section and fixed session log hook
+2026-07-04 16:48:08 | exit:0 | git -C /c/Users/carol/capstone-final push
+2026-07-04 16:52:33 | exit:0 | tail -n 5 "C:\Users\carol\capstone-final\session-log.md"
+2026-07-04 16:53:30 | exit:0 | ls -la "C:\Users\carol\capstone-final\charts"
+2026-07-04 16:53:54 | exit:0 | cd "C:\Users\carol\capstone-final" && python -c " import sys sys.argv = ['04_visualise.py'] import importlib.util spec =
+2026-07-04 16:53:57 | exit:0 | ls -la "C:\Users\carol\capstone-final\charts\01_income_by_country.png"
+2026-07-04 19:02:51 | exit:0 | git status && echo "=== DIFF session-log.md ===" && git diff session-log.md
