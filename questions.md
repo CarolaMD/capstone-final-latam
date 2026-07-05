@@ -1,28 +1,28 @@
-# Data Quality Log — Preguntas y Respuestas
+# Data Quality Log — Questions and Answers
 
-## 1. ¿Qué problema encontraste en la columna `industria`?
+## 1. What problem did you find in the `industria` column?
 
-Se encontraron 29 variantes de escritura para las mismas categorías: diferencias de
-mayúsculas/minúsculas, acentos, abreviaturas y sinónimos (por ejemplo "TEC", "ti",
-"Tech", "Tecnología" refiriéndose todos a la misma industria). Estas variantes se
-estandarizaron a 7 categorías canónicas mediante un mapa de normalización.
+29 spelling variants were found for the same categories: differences in
+capitalization, accents, abbreviations, and synonyms (for example "TEC", "ti",
+"Tech", "Tecnología" all referring to the same industry). These variants were
+standardized into 7 canonical categories using a normalization map.
 
-## 2. ¿Qué decidiste hacer con los valores faltantes de `gasto_salud_usd`?
+## 2. What did you decide to do about missing values in `gasto_salud_usd`?
 
-Se imputó con la **mediana** de la columna, siguiendo el mismo criterio aplicado a
-las demás columnas numéricas con hasta 40% de valores ausentes (edad, ingreso,
-ahorro, satisfacción financiera y horas de uso de IA). Esto permitió conservar los
-500 registros sin descartar filas. La excepción fue `deuda_total_usd`, con 45% de
-valores faltantes, que se dejó sin imputar por ser un porcentaje demasiado alto
-para hacerlo de forma confiable.
+Missing values were imputed with the **median** of the column, following the
+same approach applied to the other numeric columns with up to 40% missing
+values (age, income, savings, financial satisfaction, and weekly AI tool usage
+hours). This preserved all 500 records without dropping any rows. The
+exception was `deuda_total_usd`, with 45% missing values, which was left
+unimputed because that percentage was too high to fill in reliably.
 
-## 3. ¿Cuántos encuestados tienen ahorro negativo?
+## 3. How many respondents have negative savings?
 
-110 registros presentan ahorro mensual negativo (gasto que excede el ingreso). Son
-datos válidos y no se eliminaron; se marcaron con la columna booleana
-`ahorro_negativo` para su uso en análisis de riesgo financiero.
+110 records show negative monthly savings (spending that exceeds income).
+These are valid data points and were not removed; they were flagged with the
+boolean column `ahorro_negativo` for use in financial risk analysis.
 
 ---
 
-*Fuente: `analysis-report.md`, sección 2 (Metodología) — datos sintéticos, ver
-aviso al inicio del reporte.*
+*Source: `analysis-report.md`, Section 2 (Methodology) — synthetic data, see
+the notice at the beginning of the report.*

@@ -70,3 +70,7 @@
 2026-07-04 16:53:54 | exit:0 | cd "C:\Users\carol\capstone-final" && python -c " import sys sys.argv = ['04_visualise.py'] import importlib.util spec =
 2026-07-04 16:53:57 | exit:0 | ls -la "C:\Users\carol\capstone-final\charts\01_income_by_country.png"
 2026-07-04 19:02:51 | exit:0 | git status && echo "=== DIFF session-log.md ===" && git diff session-log.md
+2026-07-04 19:03:05 | exit:0 | git add -A && git commit -m "Add data quality log Q&A document"
+2026-07-04 19:04:18 | exit:0 | git push
+2026-07-04 19:09:22 | exit:0 | git status && echo "---FILES---" && ls -la | grep -i question
+2026-07-04 19:09:32 | exit:0 | git show HEAD:questions.md | head -40
